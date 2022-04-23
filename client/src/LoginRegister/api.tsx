@@ -1,4 +1,4 @@
-import { postData } from '../util/api';
+import { getData, postData } from '../util/api';
 
 const BACKENDURL = 'http://localhost:4000';
 async function login(email: string, password: string) {
@@ -7,6 +7,14 @@ async function login(email: string, password: string) {
     password,
   });
   console.log('login res is', res);
+  if (res.error) return false;
+  return true;
+}
+
+async function googleLogin() {
+  const res = await postData(`${BACKENDURL}/api/auth/google`);
+  console.log(res);
+  console.log('googleLogin res is', res);
   if (res.error) return false;
   return true;
 }
@@ -33,4 +41,4 @@ async function resetPassword(email: string) {
   return true;
 }
 
-export { register, login, forgotPassword, resetPassword };
+export { register, login, forgotPassword, resetPassword, googleLogin };

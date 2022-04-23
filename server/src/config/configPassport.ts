@@ -1,4 +1,5 @@
 import { Strategy as LocalStrategy } from 'passport-local';
+import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import passport from 'passport';
 import { IUser, User } from '../models/user';
 import { NativeError } from 'mongoose';
@@ -40,6 +41,8 @@ const verifyLocalUser = (
     });
 };
 
+const verifyGoogleUser: any = () => null;
+
 /**
  * Initializes all the configurations for passport regarding strategies.
  * @param passport The passport instance to use.
@@ -52,6 +55,28 @@ const initializePassport = (passport: passport.PassportStatic) => {
         usernameField: 'email', // Treat email field in request as username
       },
       verifyLocalUser,
+    ),
+  );
+
+  passport.use(
+    new GoogleStrategy(
+      {
+        clientID: process.env.CLIENT_ID || 'no ID found',
+        clientSecret: process.env.CLIENT_SECRET || 'no secret found',
+        callbackURL: '/api/auth/google/callback',
+      },
+      function (
+        request: any,
+        accessToken: any,
+        refreshToken: any,
+        profile: any,
+        done: any,
+      ) {
+        console.log(profile);
+        // User.findOne({ googleId: profile.id }, function (err: any, user: any) {
+        //   return done(err, user);
+        // });
+      },
     ),
   );
 

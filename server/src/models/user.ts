@@ -32,6 +32,7 @@ interface IUser extends mongoose.Document {
   email: string;
   password: string;
   googleAccount: IGoogleUser;
+  googleId: string;
   admin: boolean;
 }
 

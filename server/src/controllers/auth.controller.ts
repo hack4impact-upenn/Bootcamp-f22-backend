@@ -1,7 +1,11 @@
 /* eslint-disable consistent-return */
 import express from 'express';
 import { IUser } from '../models/user';
-import { createUser, getUserFromDB } from '../services/user.service';
+import {
+  createUser,
+  getUserFromDB,
+  sendPasswordResetEmail,
+} from '../services/user.service';
 import passport from 'passport';
 
 const login = async (
@@ -86,4 +90,11 @@ const approve = async (req: express.Request, res: express.Response) => {
   res.sendStatus(200);
 };
 
-export { login, logout, register, approve };
+const resetPassword = async (req: express.Request, res: express.Response) => {
+  const { email } = req.body;
+  console.log('in resetPassword');
+
+  await sendPasswordResetEmail(email);
+};
+
+export { login, logout, register, approve, resetPassword };

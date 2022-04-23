@@ -1,4 +1,10 @@
-import { login, register, forgotPassword, resetPassword } from './api';
+import {
+  login,
+  register,
+  forgotPassword,
+  resetPassword,
+  googleLogin,
+} from './api';
 
 async function LoginValidation(
   email: string,
@@ -22,6 +28,13 @@ async function LoginValidation(
   }
   setError('');
   return '';
+}
+
+async function GoogleLoginValidation(setError: (a: string) => void) {
+  if (!(await googleLogin())) {
+    setError('fail');
+    return 'fail';
+  }
 }
 
 async function RegisterValidation(
@@ -114,6 +127,7 @@ async function ResetValidation(
 
 export {
   LoginValidation,
+  GoogleLoginValidation,
   RegisterValidation,
   ForgotValidation,
   ResetValidation,
