@@ -44,9 +44,7 @@ class MongoConnection {
         await mongoose.connect(mongoUrl, opts);
       } else {
         console.log('Connecting to MongoDB...');
-        const uri =
-          process.env.ATLAS_URI ||
-          'mongodb+srv://NO:CONNECTION@STRING.FOUND.mongodb.net/FAILURE?retryWrites=true&w=majority';
+        const uri = process.env.ATLAS_URI || 'mongodb://localhost:27017/mydb';
         mongoose
           .connect(uri, opts)
           .catch((e) =>
