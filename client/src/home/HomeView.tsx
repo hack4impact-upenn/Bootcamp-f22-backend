@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '../assets/theme';
+import BioCard from './BioCard';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Button variant="contained" color="secondary">
             Let&apos;s Go
           </Button>
+          <BioCard />
         </div>
       </div>
     </ThemeProvider>
