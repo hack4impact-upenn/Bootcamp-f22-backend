@@ -4,7 +4,6 @@ import passport from 'passport';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import userRouter from '../routes/auth.route';
-import newbieRouter from '../routes/newbies';
 import 'dotenv/config';
 
 // const port = process.env.PORT || 8000;
@@ -28,7 +27,6 @@ const createServer = (): express.Express => {
   app.use(express.urlencoded({ extended: true }));
   app.use(passport.initialize());
   app.use('/api/user', userRouter);
-  app.use('/api/newbie', newbieRouter);
 
   app.get('/', (req, res) => {
     res.json({
