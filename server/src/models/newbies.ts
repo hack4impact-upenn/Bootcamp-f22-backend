@@ -8,6 +8,8 @@ interface INewbie extends mongoose.Document {
   last_name: string;
   major: string;
   graduation: number;
+  // added a new field
+  hometown: string;
 }
 
 const NewbiewSchema = new Schema({
@@ -15,6 +17,8 @@ const NewbiewSchema = new Schema({
   last_name: { type: String, required: true },
   major: { type: String, required: true },
   graduation: { type: Number, required: true },
+  // added a new field, but it is not required
+  hometown: { type: String, required: false },
 });
 
 const Newbie = mongoose.model<INewbie>('Newbie', NewbiewSchema);

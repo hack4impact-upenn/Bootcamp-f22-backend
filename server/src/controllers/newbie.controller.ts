@@ -6,6 +6,7 @@ import {
   deleteNewbiewById,
   findNewbiewsByName,
   getAllNewbies,
+  updateNewbiew,
 } from '../services/newbie.service';
 
 const postNewbie = async (
@@ -13,7 +14,7 @@ const postNewbie = async (
   res: express.Response,
   next: express.NextFunction,
 ) => {
-  const { firstName, lastName, graduation, major } = req.body;
+  const { firstName, lastName, graduation, major, hometown } = req.body;
   const duplicate = await findNewbiewsByName(firstName, lastName);
   if (duplicate.length > 0) {
     next(ApiError.badRequest('Newbie Already Exists'));
@@ -25,6 +26,10 @@ const postNewbie = async (
     newbie.last_name = lastName;
     newbie.major = major;
     newbie.graduation = graduation;
+    // since the field we add is not required, we would need to check if it has been provided before assigning it
+    if (hometown) {
+      newbie.hometown = hometown;
+    }
     await newbie.save();
     res.status(StatusCode.OK).send({ res: newbie });
   } catch (err) {
@@ -61,4 +66,19 @@ const deleteById = async (
 
 // Todo add more routes here
 
-export { postNewbie, getAll, deleteById };
+const update = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction,
+) => {
+  const { id } = req.params;
+  const updateQuery = req.body;
+  const result = await updateNewbiew(id, updateQuery);
+  if (result != null) {
+    res.status(StatusCode.OK).send({ result });
+  } else {
+    next(ApiError.notFound('The newbie you are trying to edit does not exist'));
+  }
+};
+
+export { postNewbie, getAll, deleteById, update };
